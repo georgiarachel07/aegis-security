@@ -8,7 +8,7 @@ async function api(type,data={}) {
 }
 function notify(text,error=false){$('notice').textContent=text;$('notice').className=error?'error':'';}
 async function perform(fn,message){try{await fn();if(message)notify(message);await refresh();}catch(error){notify(error.message,true);}}
-const modules=[['blocking','Ad & tracker blocker','24 starter domains · declarative network rules'],['phishing','Phishing signals','Local denylist and credential-page heuristics'],['monitoring','Network monitoring','Session-only request and rule-match logs'],['downloads','Download review','Best-effort pause of suspicious downloads'],['scanning','Reputation checks','Consent-based VirusTotal URL and hash queries']];
+const modules=[['blocking','Ad & tracker blocker','28 starter domains · declarative network rules'],['phishing','Phishing signals','Local denylist and credential-page heuristics'],['monitoring','Network monitoring','Session-only request and rule-match logs'],['downloads','Download review','Best-effort pause of suspicious downloads'],['scanning','Reputation checks','Consent-based VirusTotal URL and hash queries']];
 for(const [key,title,description] of modules){const label=element('label',undefined,'toggle'),copy=element('span'),input=element('input');copy.append(element('strong',title),element('small',description));input.type='checkbox';input.id='toggle-'+key;input.onchange=async()=>{input.disabled=true;await perform(()=>api('setting',{key,value:input.checked}),'Preference saved.');input.disabled=false;await refresh();};label.append(copy,input);$('toggles').append(label);}
 function render(data){
   latest=data;const s=data.state;

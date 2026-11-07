@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102322">
+  <title>Aegis Shield · Mobile ad blocker</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="../preview.css">
+  <link rel="stylesheet" href="mobile.css">
+  <script src="domains.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header><a href="../" class="brand">AEGIS SHIELD</a><a href="#install">Install app</a></header>
+  <main>
+    <h1>Ad blocker</h1>
+    <p>Compare the same sample ad with filtering on and off. The mobile filter protects requests inside this app. For browser-wide protection on desktop, use the <a href="https://github.com/georgiarachel07/aegis-shield/releases/latest">Chromium extension</a>.</p>
+    <section>
+      <h2>Test an advertisement</h2>
+      <p id="ready" role="status">Starting the local filter…</p>
+      <div class="links"><button id="allow" disabled>Allow sample ad</button><button id="block" disabled>Block sample ad</button></div>
+      <article id="slot" aria-live="polite"><h3 id="result">Ad slot</h3><p id="detail">Run either test to inspect the result.</p></article>
+    </section>
+    <section>
+      <h2>Check an ad URL</h2>
+      <p>See whether its hostname matches a starter rule. The address stays on your device.</p>
+      <form id="check"><label for="address">Resource URL</label><input id="address" type="url" value="https://ads.doubleclick.net/banner.js" required><button>Check rule</button></form>
+      <p id="match" role="status"></p>
+    </section>
+    <section id="install"><h2>Install Aegis Shield</h2><p>On Android, choose <strong>Install app</strong> or <strong>Add to Home screen</strong> from your browser menu. On iPhone, open this page in Safari and choose <strong>Share → Add to Home Screen</strong>.</p><button id="install-app" hidden>Install app</button><p>After the first online visit, you can reopen the ad lab and check URLs offline.</p></section>
+  </main>
+  <footer>Made by Georgia Rachel <a href="../">Security scenarios</a></footer>
+</body>
+</html>

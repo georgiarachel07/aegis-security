@@ -1,0 +1,10 @@
+main {max-width: 820px}
+h1 {margin-block: 18px}
+section h2 {margin-top: 0}
+#slot {margin-top: 20px; padding: 20px; border: 1px dashed #648277; border-radius: 8px}
+#slot[data-state="allowed"] {border-style: solid; background: #243121}
+#slot[data-state="blocked"] {border-color: #97e5b6; background: #132b25}
+#slot h3, #slot p {margin: 4px 0}
+input {width: 100%; max-width: 36em; min-height: 44px; margin-bottom: 12px; padding: 10px; border: 1px solid #728982; border-radius: 6px; font: inherit; background: #102322; color: white}
+button:disabled {opacity: .55; cursor: wait}
+button[hidden] {display: none}

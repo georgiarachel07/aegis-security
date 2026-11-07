@@ -2,7 +2,7 @@
 
 Made by Georgia Rachel.
 
-The 24 rules are handwritten domain-level starters, not copied filter-list subscriptions. Each has a stable unique numeric ID, priority 1, action block and a `||domain^` boundary pattern. They target subresources including scripts, images, frames, XHR, pings and WebSockets; they do not block top-level navigation.
+The 28 rules are handwritten domain-level starters, not copied filter-list subscriptions. Each has a stable unique numeric ID, priority 1, action block and a `||domain^` boundary pattern. They target subresources including scripts, images, frames, XHR, pings and WebSockets; they do not block top-level navigation.
 
 Domains include Google advertising/analytics endpoints, AppNexus, The Trade Desk, Criteo, Taboola, Outbrain, Comscore, Quantcast, Hotjar, Clarity, Yahoo advertising and common ad exchanges. This list is illustrative, incomplete and requires maintenance. Classification does not mean every request to the domain is malicious.
 

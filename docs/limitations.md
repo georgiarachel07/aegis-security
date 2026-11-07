@@ -2,7 +2,7 @@
 
 Made by Georgia Rachel.
 
-- A 24-domain starter ruleset has limited coverage and can break analytics-dependent pages. It does not include cosmetic filter parsing, scriptlets, full filter subscriptions or per-site allowlisting. Turn blocking off if a site breaks.
+- A 28-domain starter ruleset has limited coverage and can break analytics-dependent pages. It does not include cosmetic filter parsing, scriptlets, full filter subscriptions or per-site allowlisting. Turn blocking off if a site breaks.
 - No current production phishing feed ships with Aegis. `phishing.aegis.test` is a reserved test fixture; add reviewed domains yourself. Heuristics can produce false positives and false negatives.
 - The warning is post-navigation, top-frame only, and not a hardened interstitial. It neither stops prior script execution nor scans iframe password forms.
 - Download review is a race with the browser download pipeline. Files can finish before pause, archives can conceal unknown formats, and initial names can be missing. It cannot prevent operating-system file opening. There is no automatic “safe” resume.

@@ -1,24 +1,52 @@
-name: Publish Aegis Security release
+name: Publish Aegis Shield releases
 on:
-  push:
+  workflow_run:
+    workflows: ["Extension tests"]
+    types: [completed]
     branches: [main]
-    paths: ['.github/workflows/aegis-release.yml']
-  workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: aegis-shield-release
+  cancel-in-progress: false
 jobs:
-  release:
-    if: github.repository == 'georgiarachel07/aegis-security'
+  publish:
+    if: github.repository == 'georgiarachel07/aegis-shield' && github.event.workflow_run.event == 'push' && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Package and publish extension
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Package and publish three beta samples followed by the full release
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          set -eu
-          zip -qr Aegis-Security-1.0.0.zip manifest.json background.js content.js dashboard.* modules rules.json LICENSE README.md docs/privacy.md
-          if ! gh release view v1.0.0 >/dev/null 2>&1; then
-            gh release create v1.0.0 Aegis-Security-1.0.0.zip --target "$GITHUB_SHA" --title 'Aegis Security v1.0.0' --notes 'Made by Georgia Rachel. [Explore the interactive website without installing anything](https://georgiarachel07.github.io/aegis-security/). For browser-wide protection, extract the extension ZIP and load it unpacked in Chrome or Edge.'
+          set -euo pipefail
+          version=$(jq -r .version manifest.json)
+          if [[ "$version" != "1.1.0" ]]; then exit 0; fi
+          cp manifest.json "$RUNNER_TEMP/manifest-original.json"
+          package() {
+            zip -qr "$1" manifest.json background.js content.js dashboard.html dashboard.css dashboard.js modules rules.json LICENSE README.md docs/privacy.md
+          }
+          for beta in 1 2 3; do
+            tag="v1.1.0-beta.$beta"
+            if gh release view "$tag" >/dev/null 2>&1; then continue; fi
+            case "$beta" in
+              1) focus="Advertisement blocking";;
+              2) focus="Mobile ad lab and offline rule checker";;
+              3) focus="Browser protection and download review";;
+            esac
+            jq --arg v "1.0.99.$beta" --arg label "1.1.0 beta $beta" '.version=$v | .version_name=$label' "$RUNNER_TEMP/manifest-original.json" > manifest.json
+            asset="Aegis-Shield-$tag.zip"
+            package "$asset"
+            gh release create "$tag" "$asset" --target "$RELEASE_SHA" --prerelease --title "Aegis Shield 1.1.0 Beta $beta" --notes "Sample prerelease for testing $focus. The three beta samples share the tested release source and have distinct installable package versions. [Open the mobile app](https://georgiarachel07.github.io/aegis-shield/mobile/). Made by Georgia Rachel."
+          done
+          cp "$RUNNER_TEMP/manifest-original.json" manifest.json
+          if ! gh release view v1.1.0 >/dev/null 2>&1; then
+            package Aegis-Shield-1.1.0.zip
+            gh release create v1.1.0 Aegis-Shield-1.1.0.zip --target "$RELEASE_SHA" --latest --title "Aegis Shield v1.1.0" --notes "Made by Georgia Rachel. The Chromium extension blocks ad requests from 28 starter domains. [Try the mobile ad blocker](https://georgiarachel07.github.io/aegis-shield/mobile/) to compare allowed and blocked sample banners, check hostnames locally and use the app offline. The mobile filter applies inside the app."
           fi
-          gh release edit thesis --title 'Aegis Security archive — predecessor thesis' --notes 'Historical QuickPick thesis snapshot, retained with its original tag and attachment. This archive does not contain the Aegis extension. For Aegis Security, use the latest v1.0.0 release.'
+          gh release edit v1.0.0 --title 'Aegis Shield archive · original 1.0.0 extension' --notes 'Historical extension package released under the former product name. [Get the current Aegis Shield release](https://github.com/georgiarachel07/aegis-shield/releases/latest).'
+          gh release edit thesis --title 'Aegis Shield archive · predecessor thesis' --notes 'Original QuickPick thesis archive. [Open Aegis Shield releases](https://github.com/georgiarachel07/aegis-shield/releases).'
+

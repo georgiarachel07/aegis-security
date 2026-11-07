@@ -1,6 +1,6 @@
 # Contributing
 
-Aegis Security is made by Georgia Rachel. Contributions should preserve attribution and explain user-visible behavior.
+Aegis Shield is made by Georgia Rachel. Contributions should preserve attribution and explain user-visible behavior.
 
 1. Fork/clone the repository and create a feature branch.
 2. Keep remote code out of the extension; MV3 executes only packaged scripts.

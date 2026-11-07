@@ -526,5 +526,93 @@
         "other"
       ]
     }
+  },
+  {
+    "id": 25,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||adform.net^",
+      "resourceTypes": [
+        "script",
+        "image",
+        "stylesheet",
+        "font",
+        "xmlhttprequest",
+        "ping",
+        "sub_frame",
+        "media",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 26,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||smartadserver.com^",
+      "resourceTypes": [
+        "script",
+        "image",
+        "stylesheet",
+        "font",
+        "xmlhttprequest",
+        "ping",
+        "sub_frame",
+        "media",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 27,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||adsystem.amazon.com^",
+      "resourceTypes": [
+        "script",
+        "image",
+        "stylesheet",
+        "font",
+        "xmlhttprequest",
+        "ping",
+        "sub_frame",
+        "media",
+        "websocket",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 28,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||amazon-adsystem.com^",
+      "resourceTypes": [
+        "script",
+        "image",
+        "stylesheet",
+        "font",
+        "xmlhttprequest",
+        "ping",
+        "sub_frame",
+        "media",
+        "websocket",
+        "other"
+      ]
+    }
   }
 ]

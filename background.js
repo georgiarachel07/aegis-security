@@ -1,4 +1,4 @@
-// Aegis Security — made by Georgia Rachel. All listeners register synchronously.
+// Aegis Shield — made by Georgia Rachel. All listeners register synchronously.
 import {DEFAULTS,LIMITS,emptyState} from './modules/config.js';
 import {settings,initialize,transact} from './modules/state.js';
 import {recordTraffic,recordResponse} from './modules/traffic.js';

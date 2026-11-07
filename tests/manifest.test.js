@@ -11,7 +11,7 @@ test('manifest resources exist and MV3 has no remote executable dependencies',()
   assert.ok(read('dashboard.html').includes('Made by Georgia Rachel'));
 });
 test('rules have unique IDs and precise host anchors',()=>{
-  const rules=JSON.parse(read('rules.json'));assert.equal(rules.length,24);
+  const rules=JSON.parse(read('rules.json'));assert.equal(rules.length,28);
   assert.equal(new Set(rules.map(r=>r.id)).size,rules.length);
   for(const rule of rules){assert.equal(rule.action.type,'block');assert.match(rule.condition.urlFilter,/^\|\|[a-z0-9.-]+\^$/);assert.ok(!rule.condition.resourceTypes.includes('main_frame'));}
 });

@@ -1,20 +1,28 @@
-# Aegis Security
+# Aegis Shield
 
 **Made by Georgia Rachel — creator and developer.**
 
 A free, MIT-licensed Manifest V3 browser security workspace for desktop Chrome and Microsoft Edge. Aegis combines a starter ad/tracker blocker, local phishing heuristics, download review, opt-in VirusTotal reputation checks, and a full-tab dark dashboard. Click the extension icon to open it.
 
-## Try Aegis Security online
+## Try Aegis Shield online
 
-**[Open the interactive website — no download required](https://georgiarachel07.github.io/aegis-security/)** · [Use this template](https://github.com/georgiarachel07/aegis-security/generate) · [Aegis Security releases](https://github.com/georgiarachel07/aegis-security/releases/latest)
+**[Open the interactive website — no download required](https://georgiarachel07.github.io/aegis-shield/)** · [Use this template](https://github.com/georgiarachel07/aegis-shield/generate) · [Aegis Shield releases](https://github.com/georgiarachel07/aegis-shield/releases/latest)
 
 Run three fictional security scenarios and inspect the decisions. The website needs no login, permissions or API key. Real browser-wide protection requires the extension.
 
 To make your own copy, select **Use this template → Create a new repository**. Edit the extension or the standalone preview in `docs/index.html`, `docs/preview.css` and `docs/preview.js`. To host your copy, choose **Settings → Pages → Deploy from a branch → main → /docs**, then update the website and repository links for your account.
 
+## Mobile app and ad blocking
+
+**[Open Aegis Shield on your phone](https://georgiarachel07.github.io/aegis-shield/mobile/)**. Compare an allowed sample advertisement with a request intercepted by the app, or check a URL against the same domain list used by the extension. The checker processes addresses on your device. After the first online visit the mobile app works offline.
+
+On Android, open the browser menu and choose **Install app** or **Add to Home screen**. On iPhone, open the app in Safari, choose **Share → Add to Home Screen** and enable **Open as Web App** if offered. The mobile service worker filters requests made by this app. The desktop Chromium extension applies native rules across supported websites. Ads served by unlisted hosts may still appear.
+
+Visit [Releases](https://github.com/georgiarachel07/aegis-shield/releases) for three sample prerelease builds of 1.1.0 and the full Aegis Shield release. Each beta shares the release source and documents a different feature to try.
+
 ## What it does
 
-- Blocks subresource requests to 24 starter advertising and analytics domains using `declarativeNetRequest`.
+- Blocks subresource requests to 28 starter advertising and analytics domains using `declarativeNetRequest`.
 - Displays confirmed Aegis rule matches and observed HTTP(S) request events, with incoming response status/cache outcomes, a real-time 60-minute chart, hostname-only activity log and third-party filter.
 - Warns on locally denied domains and suspicious credential-page signals using a modal overlay with explicit leave/proceed actions.
 - Attempts to pause executables, scripts, archives, opaque-source downloads and browser-flagged downloads for human review.
@@ -26,7 +34,7 @@ To make your own copy, select **Use this template → Create a new repository**.
 
 ## Install in Chrome or Edge
 
-1. Download this repository as a ZIP using **Code → Download ZIP**, then extract it. Alternatively run `git clone https://github.com/georgiarachel07/aegis-security.git`.
+1. Download this repository as a ZIP using **Code → Download ZIP**, then extract it. Alternatively run `git clone https://github.com/georgiarachel07/aegis-shield.git`.
 2. Open `chrome://extensions` in Chrome, or `edge://extensions` in Edge.
 3. Enable **Developer mode**.
 4. Choose **Load unpacked** and select the extracted folder containing `manifest.json`.

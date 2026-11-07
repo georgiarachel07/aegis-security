@@ -17,7 +17,7 @@
     }catch{/* Reload the page after reloading/updating the extension. */}
   }
   function show(reasons) {
-    warning=document.createElement('aegis-security-warning');
+    warning=document.createElement('aegis-shield-warning');
     const shadow=warning.attachShadow({mode:'closed'});
     const style=document.createElement('style');
     style.textContent=':host{all:initial} dialog{box-sizing:border-box;max-width:600px;width:calc(100% - 32px);border:1px solid #f2b35f;border-radius:20px;padding:32px;background:#111b2b;color:#f6f8fc;font:16px/1.6 system-ui}dialog::backdrop{background:#060b16f2}h1{font-size:28px;line-height:1.2}button{padding:13px 18px;margin:8px 8px 0 0;border:1px solid #97a8bc;border-radius:8px;cursor:pointer;background:#f2b35f;color:#121923;font:600 15px system-ui}button+button{background:transparent;color:#f6f8fc}button:focus-visible{outline:3px solid white;outline-offset:3px}small{display:block;margin-top:24px;color:#c1cbd8}';

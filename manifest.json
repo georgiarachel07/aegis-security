@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Aegis Security \u2014 made by Georgia Rachel",
-  "short_name": "Aegis Security",
-  "version": "1.0.0",
+  "name": "Aegis Shield \u2014 made by Georgia Rachel",
+  "short_name": "Aegis Shield",
+  "version": "1.1.0",
   "author": "Georgia Rachel",
   "description": "Local traffic visibility, starter tracker blocking, phishing warnings and opt-in VirusTotal checks. Made by Georgia Rachel.",
   "minimum_chrome_version": "120",
@@ -23,7 +23,7 @@
     "type": "module"
   },
   "action": {
-    "default_title": "Open Aegis Security \u2014 made by Georgia Rachel"
+    "default_title": "Open Aegis Shield \u2014 made by Georgia Rachel"
   },
   "content_scripts": [
     {
