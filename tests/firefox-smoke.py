@@ -10,6 +10,7 @@ identifier = 'aegis-shield@georgiarachel07.github.io'
 origin = str(uuid.uuid4())
 options = webdriver.FirefoxOptions()
 options.add_argument('-headless')
+options.add_argument('--remote-allow-system-access')  # Isolated CI profile, permits WebDriver to open add-on pages.
 options.set_preference('extensions.webextensions.uuids', json.dumps({identifier: origin}))
 with webdriver.Firefox(options=options) as driver:
     assert driver.install_addon(sys.argv[1], temporary=True) == identifier
