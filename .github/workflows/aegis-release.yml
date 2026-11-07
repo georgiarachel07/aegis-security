@@ -1,0 +1,24 @@
+name: Publish Aegis Security release
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/aegis-release.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    if: github.repository == 'georgiarachel07/aegis-security'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package and publish extension
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          zip -qr Aegis-Security-1.0.0.zip manifest.json background.js content.js dashboard.* modules rules.json LICENSE README.md docs/privacy.md
+          if ! gh release view v1.0.0 >/dev/null 2>&1; then
+            gh release create v1.0.0 Aegis-Security-1.0.0.zip --target "$GITHUB_SHA" --title 'Aegis Security v1.0.0' --notes 'Made by Georgia Rachel. [Explore the interactive website without installing anything](https://georgiarachel07.github.io/aegis-security/). For browser-wide protection, extract the extension ZIP and load it unpacked in Chrome or Edge.'
+          fi
+          gh release edit thesis --title 'Aegis Security archive — predecessor thesis' --notes 'Historical QuickPick thesis snapshot, retained with its original tag and attachment. This archive does not contain the Aegis extension. For Aegis Security, use the latest v1.0.0 release.'

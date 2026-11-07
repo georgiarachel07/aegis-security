@@ -4,6 +4,14 @@
 
 A free, MIT-licensed Manifest V3 browser security workspace for desktop Chrome and Microsoft Edge. Aegis combines a starter ad/tracker blocker, local phishing heuristics, download review, opt-in VirusTotal reputation checks, and a full-tab dark dashboard. Click the extension icon to open it.
 
+## Try Aegis Security online
+
+**[Open the interactive website — no download required](https://georgiarachel07.github.io/aegis-security/)** · [Use this template](https://github.com/georgiarachel07/aegis-security/generate) · [Aegis Security releases](https://github.com/georgiarachel07/aegis-security/releases/latest)
+
+Run three fictional security scenarios and inspect the decisions. The website needs no login, permissions or API key. Real browser-wide protection requires the extension.
+
+To make your own copy, select **Use this template → Create a new repository**. Edit the extension or the standalone preview in `docs/index.html`, `docs/preview.css` and `docs/preview.js`. To host your copy, choose **Settings → Pages → Deploy from a branch → main → /docs**, then update the website and repository links for your account.
+
 ## What it does
 
 - Blocks subresource requests to 24 starter advertising and analytics domains using `declarativeNetRequest`.
@@ -18,7 +26,7 @@ A free, MIT-licensed Manifest V3 browser security workspace for desktop Chrome a
 
 ## Install in Chrome or Edge
 
-1. Download this repository as a ZIP using **Code → Download ZIP**, then extract it. Alternatively run `git clone https://github.com/georgiarachel07/QuickPick-Safe-Campus-Food-Ordering-THESIS-.git` (access is required while the repository is private).
+1. Download this repository as a ZIP using **Code → Download ZIP**, then extract it. Alternatively run `git clone https://github.com/georgiarachel07/aegis-security.git`.
 2. Open `chrome://extensions` in Chrome, or `edge://extensions` in Edge.
 3. Enable **Developer mode**.
 4. Choose **Load unpacked** and select the extracted folder containing `manifest.json`.
