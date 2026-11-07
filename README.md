@@ -7,9 +7,10 @@ A free, MIT-licensed Manifest V3 browser security workspace for desktop Chrome a
 ## What it does
 
 - Blocks subresource requests to 24 starter advertising and analytics domains using `declarativeNetRequest`.
-- Displays confirmed Aegis rule matches and observed HTTP(S) request events, with a real-time 60-minute chart, hostname-only activity log and third-party filter.
+- Displays confirmed Aegis rule matches and observed HTTP(S) request events, with incoming response status/cache outcomes, a real-time 60-minute chart, hostname-only activity log and third-party filter.
 - Warns on locally denied domains and suspicious credential-page signals using a modal overlay with explicit leave/proceed actions.
 - Attempts to pause executables, scripts, archives, opaque-source downloads and browser-flagged downloads for human review.
+- Lets you preview a held download’s full source URL before separately consenting to a reputation check. Previewing never contacts VirusTotal.
 - Submits URLs to VirusTotal only after consent; retrieves pending analysis results on demand.
 - Hashes selected files locally with SHA-256 and queries existing VirusTotal file reports. File bytes are never uploaded.
 - Keeps preferences locally and browsing logs/API keys in trusted-context session storage. Includes clear-history and forget-key controls.

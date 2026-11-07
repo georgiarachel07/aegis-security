@@ -1,7 +1,7 @@
 // Aegis Security — made by Georgia Rachel. All listeners register synchronously.
 import {DEFAULTS,LIMITS,emptyState} from './modules/config.js';
 import {settings,initialize,transact} from './modules/state.js';
-import {recordTraffic} from './modules/traffic.js';
+import {recordTraffic,recordResponse} from './modules/traffic.js';
 import {analyzePage} from './modules/heuristics.js';
 import {parseHosts,host} from './modules/urls.js';
 import {submitURL,lookupHash,refreshAnalysis} from './modules/virustotal.js';
@@ -16,6 +16,9 @@ chrome.webRequest.onBeforeRequest.addListener(d=>{
   if(d.tabId<0)return; // Exclude extension/API traffic and browser background traffic.
   run(async()=>{if((await settings()).monitoring)await transact(s=>recordTraffic(s,d));});
 },{urls:['http://*/*','https://*/*']});
+const responseListener=d=>{if(d.tabId>=0)run(async()=>{if((await settings()).monitoring)await transact(s=>recordResponse(s,d));});};
+chrome.webRequest.onCompleted.addListener(responseListener,{urls:['http://*/*','https://*/*']});
+chrome.webRequest.onErrorOccurred.addListener(responseListener,{urls:['http://*/*','https://*/*']});
 // Exact rule-match events are available for this UNPACKED development build only.
 chrome.declarativeNetRequest.onRuleMatchedDebug?.addListener(info=>run(async()=>{
   if((await settings()).monitoring && info.rule.rulesetId==='starter') await transact(s=>recordTraffic(s,{...info.request,ruleId:info.rule.ruleId},true));
@@ -78,6 +81,14 @@ async function handle(message,sender) {
       await transact(s=>{const saved=s.scans.find(x=>x.id===message.id);if(saved)Object.assign(saved,result);});return result;
     }
     case 'download': await actOnDownload(message.id,message.action);return {};
+    case 'downloadSource': {
+      const {telemetry}=await chrome.storage.session.get('telemetry');
+      if(!Number.isInteger(message.id)||!telemetry?.downloads.some(d=>d.id===message.id))throw new Error('Unknown review item.');
+      const [item]=await chrome.downloads.search({id:message.id});
+      const url=item?.finalUrl||item?.url;
+      if(!/^https?:\/\//i.test(url||''))throw new Error('No HTTP(S) source is available. Check the file hash instead.');
+      return {url}; // Preview only. A separate consented scan is required to share it.
+    }
     case 'clear': await transact(s=>Object.assign(s,emptyState()));await chrome.action.setBadgeText({text:''});return {};
     default:throw new Error('Unknown action.');
   }

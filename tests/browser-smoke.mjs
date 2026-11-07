@@ -10,6 +10,12 @@ import assert from 'node:assert/strict';
 const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE||'playwright');
 const root=fileURLToPath(new URL('../',import.meta.url)), profile=await mkdtemp(join(process.env.PROFILE_ROOT||tmpdir(),'aegis-smoke-'));
 const server=createServer((req,res)=>{
+  if(req.url==='/fixture.zip'){
+    // Harmless slow attachment, never executed or opened. Pause before it can finish.
+    res.writeHead(200,{'Content-Type':'application/zip','Content-Disposition':'attachment; filename="fixture.zip"','Content-Length':4194304});
+    const chunk=Buffer.alloc(65536);let sent=0;const timer=setInterval(()=>{res.write(chunk);sent+=chunk.length;if(sent>=4194304){clearInterval(timer);res.end();}},150);
+    res.on('close',()=>clearInterval(timer));return;
+  }
   res.writeHead(200,{'Content-Type':'text/html'});
   res.end(req.url==='/password'?'<form><label>Password <input type="password"></label></form>':'<h1>Benign Aegis fixture</h1>');
 });
@@ -29,6 +35,10 @@ try{
   await tab.goto(url);await tab.goto(url+'/password');await tab.locator('aegis-security-warning').waitFor({state:'attached'});
   // Dashboard intervals pause in hidden tabs; bringing it forward exercises visibility refresh.
   await dash.bringToFront();await dash.waitForFunction(()=>Number(document.querySelector('#total').textContent)>0&&Number(document.querySelector('#alert-count').textContent)>0);
+  await tab.goto(url);await tab.evaluate(()=>{const link=document.createElement('a');link.href='/fixture.zip';link.download='fixture.zip';document.body.append(link);link.click();});
+  await dash.bringToFront();await dash.getByText('Paused for review',{exact:true}).waitFor({timeout:20000});
+  await dash.getByRole('button',{name:'Review source URL'}).first().click();assert.equal(await dash.locator('#scan-url').inputValue(),url+'/fixture.zip');assert.equal(await dash.locator('#consent').isChecked(),false);
+  await dash.getByRole('button',{name:'Cancel download'}).first().click();await dash.getByText('Cancelled',{exact:true}).first().waitFor();
   for(const width of [1440,768,375]){await dash.setViewportSize({width,height:1000});assert.ok(await dash.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Page overflows at '+width);}
   if(process.env.SCREENSHOT_DIR){await mkdir(process.env.SCREENSHOT_DIR,{recursive:true});await dash.setViewportSize({width:1440,height:1000});await dash.screenshot({path:resolve(process.env.SCREENSHOT_DIR,'dashboard.png')});}
   assert.deepEqual(errors,[]);console.log('PASS: unpacked service worker, dashboard, real rule engine, settings, local HTTP traffic, phishing overlay, mobile/tablet/desktop layout.');

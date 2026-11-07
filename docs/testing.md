@@ -15,4 +15,6 @@ Manual browser checks:
 7. Without a key, a reputation query must fail clearly. With your own key, consent to submitting a non-sensitive public URL, then refresh after 16 seconds. Unknown hashes and quota errors must never say safe.
 8. Test keyboard-only use, 375/768/1440px widths, reduced motion, chart data table, clear history and forgetting the key. Reopen/reload to verify intended session/persistent storage behavior.
 
+CI also installs an isolated Chromium build and exercises the unpacked worker, DNR rules, page warnings, download review and dashboard at 375, 768 and 1440px. A dashboard screenshot is retained as a workflow artifact.
+
 Real VirusTotal calls require a user-owned key and consent; no live-API success is claimed by the automated mock tests.
