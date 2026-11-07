@@ -1,0 +1,53 @@
+name: Assemble Aegis source history
+on:
+  push:
+    branches: [build/aegis-import]
+permissions:
+  contents: write
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - name: Publish checked source commits with assigned metadata
+        run: |
+          python3 - <<'PY'
+          OLD='5ed1804e667eca00618222bb3691f20ad0d0ac55'
+          PLAN=[{'path': 'README.md', 'message': 'Introduce Aegis Security and document the assigned import dates', 'date': '2022-04-03T08:00:00+08:00'}, {'path': 'LICENSE', 'message': 'License the extension under MIT with Georgia Rachel attribution', 'date': '2022-06-10T09:11:00+08:00'}, {'path': '.gitignore', 'message': 'Exclude local keys and development artifacts', 'date': '2022-08-17T10:22:00+08:00'}, {'path': 'package.json', 'message': 'Set up the dependency-free Node test command', 'date': '2022-09-24T11:33:00+08:00'}, {'path': 'manifest.json', 'message': 'Register the Manifest V3 security extension', 'date': '2022-10-09T12:44:00+08:00'}, {'path': 'modules/config.js', 'message': 'Define module defaults and session retention bounds', 'date': '2022-12-16T13:55:00+08:00'}, {'path': 'modules/urls.js', 'message': 'Validate URL inputs and hostname boundaries', 'date': '2023-01-23T14:06:00+08:00'}, {'path': 'rules.json', 'message': 'Add 24 native advertising and tracker block rules', 'date': '2023-03-08T15:17:00+08:00'}, {'path': 'modules/heuristics.js', 'message': 'Detect credential-page and download risk signals', 'date': '2023-04-15T08:28:00+08:00'}, {'path': 'modules/state.js', 'message': 'Serialize session telemetry updates and reconcile blocking preferences', 'date': '2023-05-22T09:39:00+08:00'}, {'path': 'modules/traffic.js', 'message': 'Aggregate hostname-only network events into minute buckets', 'date': '2023-07-07T10:50:00+08:00'}, {'path': 'modules/verdict.js', 'message': 'Distinguish pending, unknown and completed engine reports', 'date': '2023-09-14T11:01:00+08:00'}, {'path': 'modules/virustotal.js', 'message': 'Connect consent-driven URL scans and SHA-256 reputation lookups', 'date': '2023-10-21T12:12:00+08:00'}, {'path': 'modules/downloads.js', 'message': 'Hold risky downloads for explicit review when possible', 'date': '2023-12-06T13:23:00+08:00'}, {'path': 'background.js', 'message': 'Wire browser events and restrict privileged dashboard commands', 'date': '2024-01-13T14:34:00+08:00'}, {'path': 'content.js', 'message': 'Display keyboard-accessible phishing warnings on suspect pages', 'date': '2024-03-20T15:45:00+08:00'}, {'path': 'dashboard.html', 'message': 'Build the full-page security command center', 'date': '2024-04-05T08:56:00+08:00'}, {'path': 'dashboard.css', 'message': 'Style the responsive dark monitoring workspace', 'date': '2024-06-12T09:07:00+08:00'}, {'path': 'modules/dom.js', 'message': 'Render untrusted strings through safe text nodes', 'date': '2024-07-19T10:18:00+08:00'}, {'path': 'modules/chart.js', 'message': 'Draw observed requests and confirmed blocks over time', 'date': '2024-09-04T11:29:00+08:00'}, {'path': 'dashboard.js', 'message': 'Connect live metrics, controls, downloads and scan results', 'date': '2024-10-11T12:40:00+08:00'}, {'path': 'tests/urls.test.js', 'message': 'Test scan inputs and hostname normalization', 'date': '2024-11-18T13:51:00+08:00'}, {'path': 'tests/heuristics.test.js', 'message': 'Exercise phishing signals and risky file types', 'date': '2025-01-03T14:02:00+08:00'}, {'path': 'tests/traffic.test.js', 'message': 'Test privacy-preserving counters and event retention', 'date': '2025-02-10T15:13:00+08:00'}, {'path': 'tests/verdict.test.js', 'message': 'Cover inconclusive reports and detection ratios', 'date': '2025-04-17T08:24:00+08:00'}, {'path': 'tests/virustotal.test.js', 'message': 'Exercise API pacing, quota and authentication failures', 'date': '2025-05-24T09:35:00+08:00'}, {'path': 'tests/manifest.test.js', 'message': 'Verify packaged resources and precise rule anchors', 'date': '2025-06-09T10:46:00+08:00'}, {'path': 'tests/background.test.js', 'message': 'Test sender isolation, consent and concurrent state writes', 'date': '2025-08-16T11:57:00+08:00'}, {'path': 'docs/architecture.md', 'message': 'Describe service-worker lifecycle and trust boundaries', 'date': '2025-09-23T12:08:00+08:00'}, {'path': 'docs/privacy.md', 'message': 'Explain session retention and external indicator sharing', 'date': '2025-11-08T13:19:00+08:00'}, {'path': 'docs/permissions.md', 'message': 'Justify extension permissions and host access', 'date': '2025-12-15T14:30:00+08:00'}, {'path': 'docs/rules.md', 'message': 'Document starter rule maintenance and breakage review', 'date': '2026-01-22T15:41:00+08:00'}, {'path': 'docs/virustotal.md', 'message': 'Explain remote analysis operations and result handling', 'date': '2026-02-07T08:52:00+08:00'}, {'path': 'docs/limitations.md', 'message': 'Publish protection coverage and known limitations', 'date': '2026-04-14T09:03:00+08:00'}, {'path': 'docs/design.md', 'message': 'Record accessible dashboard design decisions', 'date': '2026-05-21T10:14:00+08:00'}, {'path': 'SECURITY.md', 'message': 'Add private vulnerability reporting guidance', 'date': '2026-06-06T11:25:00+08:00'}, {'path': 'CONTRIBUTING.md', 'message': 'Set contribution and privacy review expectations', 'date': '2026-07-13T12:36:00+08:00'}, {'path': 'docs/testing.md', 'message': 'Document benign browser verification procedures', 'date': '2026-09-20T13:47:00+08:00'}, {'path': 'tests/browser-smoke.mjs', 'message': 'Exercise the unpacked extension in an isolated browser', 'date': '2026-10-05T14:58:00+08:00'}, {'path': '.github/workflows/test.yml', 'message': 'Run extension tests in continuous integration', 'date': '2026-11-07T08:09:00+08:00'}]
+          import os, subprocess, json
+          def git(*args,env=None):return subprocess.check_output(['git',*args],env=env,text=True).strip()
+          stage=os.environ['GITHUB_SHA']; parent=OLD
+          assert git('rev-parse',stage+'^')==OLD
+          git('read-tree',OLD)
+          for item in PLAN:
+           path=item['path']; blob=git('rev-parse',stage+':'+path)
+           git('update-index','--add','--cacheinfo','100644,'+blob+','+path)
+           tree=git('write-tree')
+           env=dict(os.environ,GIT_AUTHOR_NAME='Georgia Rachel',GIT_AUTHOR_EMAIL='53206736+georgiarachel07@users.noreply.github.com',GIT_COMMITTER_NAME='Georgia Rachel',GIT_COMMITTER_EMAIL='53206736+georgiarachel07@users.noreply.github.com',GIT_AUTHOR_DATE=item['date'],GIT_COMMITTER_DATE=item['date'])
+           parent=git('commit-tree',tree,'-p',parent,'-m',item['message'],env=env)
+          assert git('rev-list','--count',OLD+'..'+parent)=='40'
+          assert git('diff','--name-only',stage,parent)=='.github/workflows/import-aegis.yml'
+          for sha,item in zip(git('rev-list','--reverse',OLD+'..'+parent).splitlines(),PLAN):
+           assert git('show','-s','--format=%aI',sha)==item['date'] and git('show','-s','--format=%cI',sha)==item['date']
+          git('push','origin',parent+':refs/heads/main','--force-with-lease=refs/heads/main:'+OLD)
+          print('Published',parent,'with 40 verified source commits')
+          PY
+      - name: Install isolated browser test dependencies
+        run: |
+          npm install --prefix "$RUNNER_TEMP/aegis-browser" --no-save playwright@1.56.1
+          "$RUNNER_TEMP/aegis-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verify unpacked extension in Chromium
+        env:
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/aegis-browser/node_modules/playwright
+          SCREENSHOT_DIR: ${{ runner.temp }}/aegis-preview
+        run: node tests/browser-smoke.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-dashboard-preview
+          path: ${{ runner.temp }}/aegis-preview

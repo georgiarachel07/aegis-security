@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Aegis Security \u2014 made by Georgia Rachel",
+  "short_name": "Aegis Security",
+  "version": "1.0.0",
+  "author": "Georgia Rachel",
+  "description": "Local traffic visibility, starter tracker blocking, phishing warnings and opt-in VirusTotal checks. Made by Georgia Rachel.",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "webRequest",
+    "downloads",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Open Aegis Security \u2014 made by Georgia Rachel"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "starter",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; connect-src https://www.virustotal.com; base-uri 'none'"
+  }
+}
