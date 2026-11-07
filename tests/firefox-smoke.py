@@ -3,6 +3,7 @@ import json
 import sys
 import uuid
 from selenium import webdriver
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -10,9 +11,9 @@ identifier = 'aegis-shield@georgiarachel07.github.io'
 origin = str(uuid.uuid4())
 options = webdriver.FirefoxOptions()
 options.add_argument('-headless')
-options.add_argument('--remote-allow-system-access')  # Isolated CI profile, permits WebDriver to open add-on pages.
 options.set_preference('extensions.webextensions.uuids', json.dumps({identifier: origin}))
-with webdriver.Firefox(options=options) as driver:
+service = Service(service_args=['--allow-system-access'])  # Isolated CI profile only.
+with webdriver.Firefox(options=options, service=service) as driver:
     assert driver.install_addon(sys.argv[1], temporary=True) == identifier
     driver.get('moz-extension://'+origin+'/dashboard.html')
     wait = WebDriverWait(driver, 20)
