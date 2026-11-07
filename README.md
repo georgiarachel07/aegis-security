@@ -32,6 +32,17 @@ Visit [Releases](https://github.com/georgiarachel07/aegis-shield/releases) for t
 - Keeps preferences locally and browsing logs/API keys in trusted-context session storage. Includes clear-history and forget-key controls.
 - Uses no CDN, remote scripts, framework, analytics, telemetry backend, or build step.
 
+## Browser packages
+
+Download the build for your browser from [Aegis Shield releases](https://github.com/georgiarachel07/aegis-shield/releases/latest). To build the same unpacked folders locally, run `python tools/package-browsers.py build`.
+
+| Browser | Installation and protection |
+|---|---|
+| Desktop Chrome, Edge, Brave, Opera and Vivaldi | Extract the Chromium ZIP. Enable Developer mode in the browser’s Extensions page, then select **Load unpacked** and choose the extracted folder. The full dashboard uses Chromium extension APIs. Chrome-family compatibility depends on the browser version and enabled APIs. |
+| Desktop Firefox | Extract the Firefox ZIP. Open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select its manifest.json. Allow website access when prompted. Temporary installation lasts until Firefox restarts. Persistent installation in standard Firefox requires Mozilla signing. Exact block-event reporting depends on the browser’s debug capabilities. |
+| Safari on macOS and iOS | Download the Xcode project. On a Mac, open it in Xcode, select your signing team and target, build the containing app, and enable Aegis Shield in Safari Extensions. This port provides the 28-domain ad blocker and its toolbar switch. Distribution to other devices requires Apple signing. |
+| Browsers without compatible extension APIs | [Open the mobile web app](https://georgiarachel07.github.io/aegis-shield/mobile/). Filtering is scoped to requests inside the app. |
+
 ## Install in Chrome or Edge
 
 1. Download this repository as a ZIP using **Code → Download ZIP**, then extract it. Alternatively run `git clone https://github.com/georgiarachel07/aegis-shield.git`.
@@ -42,7 +53,7 @@ Visit [Releases](https://github.com/georgiarachel07/aegis-shield/releases) for t
 6. Click the Aegis toolbar icon. Its full-page dashboard opens in a new tab.
 7. Browse ordinary HTTP(S) sites, then return to the dashboard to inspect real events.
 
-The unpacked folder must stay on disk. After editing source files, click **Reload** on the browser's extensions page and reload existing webpages. This is a desktop Chromium extension; Firefox and Safari need separate compatibility work. It does not operate on browser internal pages, extension stores, other extension pages or local files. Existing tabs need a refresh after installation. Private browsing is not enabled by default.
+The unpacked folder must stay on disk. After editing source files, click **Reload** on the browser's extensions page and reload existing webpages. Use the browser-specific packages above for Firefox and Safari. It does not operate on browser internal pages, extension stores, other extension pages or local files. Existing tabs need a refresh after installation. Private browsing is not enabled by default.
 
 ## Set up VirusTotal
 

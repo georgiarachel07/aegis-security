@@ -1,0 +1,49 @@
+name: Browser packages
+on:
+  push:
+    branches: [main]
+    paths: ['tools/package-browsers.py', 'ports/**', 'tests/firefox-smoke.py', '.github/workflows/browser-ports.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  firefox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python tools/package-browsers.py "$RUNNER_TEMP/shield"
+      - uses: browser-actions/setup-firefox@v1
+      - run: pip install selenium
+      - run: python tests/firefox-smoke.py "$RUNNER_TEMP/shield/Aegis-Shield-firefox.zip"
+  safari:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/package-browsers.py "$RUNNER_TEMP/shield"
+      - name: Generate Safari app project
+        run: xcrun safari-web-extension-converter "$RUNNER_TEMP/shield/safari" --project-location "$RUNNER_TEMP/apple" --app-name "Aegis Shield" --bundle-identifier io.github.georgiarachel07.AegisShield --no-open --no-prompt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Aegis-Shield-Xcode
+          path: ${{ runner.temp }}/apple
+  release:
+    needs: [firefox, safari]
+    if: github.repository == 'georgiarachel07/aegis-shield'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: python tools/package-browsers.py "$RUNNER_TEMP/shield"
+      - uses: actions/download-artifact@v4
+        with:
+          name: Aegis-Shield-Xcode
+          path: apple
+      - run: cd apple && zip -qr "$RUNNER_TEMP/shield/Aegis-Shield-Xcode.zip" .
+      - name: Publish browser-specific downloads
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view v1.1.1 >/dev/null 2>&1; then
+            gh release create v1.1.1 "$RUNNER_TEMP"/shield/*.zip --target "$GITHUB_SHA" --latest --title "Aegis Shield v1.1.1 · Browser packages" --notes "Chromium desktop package, Firefox temporary development build, and Safari ad-blocking source with an unsigned Xcode project. See the README for installation instructions."
+          fi
