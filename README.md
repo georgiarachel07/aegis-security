@@ -113,9 +113,6 @@ Edit `rules.json` for curated host rules; use unique numeric IDs and test for br
 
 Read the [privacy policy](docs/privacy.md), [permission rationale](docs/permissions.md) and [security policy](SECURITY.md). Browsing telemetry is bounded and session-only. The only remote integration is a user-requested VirusTotal call. API keys and telemetry are not included in exported files because this extension has no data-export feature. Clearing history does not resume or cancel paused downloads; use the browser's Downloads page if the review list was cleared.
 
-## Commit-date disclosure
-
-This codebase was created in November 2026. At the repository owner's request, its 40 source-import commits have deliberately assigned author/committer dates from April 2022 through November 2026, with month gaps. Those dates are **metadata customization, not evidence that the code existed, was tested or was maintained during those earlier years**. The previous project history remains an ancestor and is also retained on a backup branch. Repository creation dates are not changed.
 
 ## License and credit
 
